@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SDN Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    table {border-collapse: collapse; width: 100%;}
+    th, td {border: 1px solid #aaa; padding: 6px;}
+    th {background-color: #f2f2f2;}
+  </style>
+</head>
+<body>
+  <h2> Flussi di rete SDN</h2>
+  <table>
+    <tr>
+      <th>Timestamp</th><th>Src MAC</th><th>Dst MAC</th><th>Proto</th>
+      <th>Dst Port</th><th>Switch</th><th>Bitrate (Mbps)</th>
+      <th>Durata (s)</th><th>Pacchetto Medio (B)</th>
+    </tr>
+    {% for row in records %}
+    <tr>
+      <td>{{ row.timestamp }}</td><td>{{ row.src_mac }}</td><td>{{ row.dst_mac }}</td><td>{{ row.proto }}</td>
+      <td>{{ row.dst_port }}</td><td>{{ row.switch_id }}</td><td>{{ row.bitrate }}</td>
+      <td>{{ row.duration }}</td><td>{{ row.avg_pkt_size }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h3> Grafico Bitrate</h3>
+  <canvas id="myChart"></canvas>
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [{% for row in records %}"{{ loop.index }}",{% endfor %}],
+        datasets: [{
+          label: 'Bitrate (Mbps)',
+          data: [{% for row in records %}{{ row.bitrate }},{% endfor %}],
+          borderColor: 'blue',
+          fill: false
+        }, {
+          label: 'Durata (s)',
+          data: [{% for row in records %}{{ row.duration }},{% endfor %}],
+          borderColor: 'orange',
+          fill: false
+        }, {
+          label: 'Pacchetto Medio (B)',
+          data: [{% for row in records %}{{ row.avg_pkt_size }},{% endfor %}],
+          borderColor: 'green',
+          fill: false
+        }]
+      },
+      options: { responsive: true }
+    });
+  </script>
+</body>
+</html>
