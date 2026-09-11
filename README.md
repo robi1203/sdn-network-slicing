@@ -1,6 +1,6 @@
 # SDN Network Slicing con Ryu e Mininet
 
-Progetto per il corso di Ingegneria Informatica (Magistrale) — Università degli Studi di Napoli Federico II.
+Progetto per il corso di Network and Cloud Infrastructures, Ingegneria Informatica (Magistrale) — Università degli Studi di Napoli Federico II.
 
 Implementazione di **Network Slicing** in un ambiente Software-Defined Networking (SDN), realizzata con **Mininet** come emulatore di rete e **Ryu** come controller OpenFlow 1.3. Il progetto esplora due forme distinte di slicing:
 
